@@ -4,7 +4,7 @@ from d2l import torch as d2l
 
 
 
-#
+
 # y = XW + b + noise(ramdom)
 def synthetic_data(w, b, num_examples):
     X = torch.normal(0, 1, (num_examples, len(w)))
