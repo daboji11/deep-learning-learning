@@ -4,6 +4,9 @@ from torch import nn
 from torch.nn import functional as F
 from d2l import torch as d2l
 
+# loss 0.414, train acc 0.869, test acc 0.855
+# 35.8 examples/sec on mps lol
+
 pretrained_net = torchvision.models.resnet18(pretrained=True)
 # adaptive avg pool (7*7->1*1) -> linear net
 # print(list(pretrained_net.children())[-3:]) 
@@ -117,9 +120,7 @@ def train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs,
     
 
 
-num_epochs, lr, wd, devices = 5, 0.001, 1e-3, try_mps()
-trainer = torch.optim.SGD(net.parameters(), lr=lr, weight_decay=wd)
-train_ch13(net, train_iter, test_iter, loss, trainer, num_epochs, devices) 
+
 
 def loss(inputs, targets):
     return F.cross_entropy(inputs, targets, reduction='none').mean(1).mean(1)
